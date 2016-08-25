@@ -1,0 +1,152 @@
+package com.sample
+
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.GeoRelation;
+import com.engine.CheckingEngine;
+
+
+
+rule " test"
+
+    when
+    GeoRelation(relation==Relation.PARALLEL_LINES
+    && $line1:((Line)firstItem)
+    && $line2:((Line)secondItem)
+    
+    
+    )
+    $angle1 : Angle( directionRight.name==$line1.name || directionLeft.name==$line1.name)
+    
+    $angle2 : Angle((directionRight.name==$line2.name
+    && directionLeft.name==$angle1.directionLeft.name &&
+    eval($angle1.directionRight.name==$line1.name))||(directionLeft.name==$line2.name
+    && directionRight.name==$angle1.directionRight.name &&
+    eval($angle1.directionLeft.name==$line1.name))
+    )
+    
+    
+    
+    then
+        
+        
+    end
+ 
+ 
+rule " alternate angles between parallel line"
+
+    when
+    GeoRelation(relation==Relation.PARALLEL_LINES
+    && $line1:((Line)firstItem)
+    && $line2:((Line)secondItem)
+    
+    
+    )
+    $angle1 : Angle( directionRight.name==$line1.name || directionLeft.name==$line1.name)
+    $angle2 : Angle((directionRight.name==$line2.name
+    && directionLeft.name==$angle1.directionLeft.name &&
+    eval($angle1.directionRight.name==$line1.name))||(directionLeft.name==$line2.name
+    && directionRight.name==$angle1.directionRight.name &&
+    eval($angle1.directionLeft.name==$line1.name))
+    )
+    
+    then
+   	 
+   	 GeoRelation parrallelAngleEqual = new GeoRelation($angle1,$angle2,Relation.EQUALS);
+   	 insert(parrallelAngleEqual);
+   	// System.out.println($angle1.pointOne.name+""+$angle1.middle.name+""+$angle1.pointThree.name+"equal alternate angles"+
+   	 //$angle2.pointOne.name+""+$angle2.middle.name+""+$angle2.pointThree.name);
+   	 CheckingEngine.inferedKnowledge.insertGeoRelation(parrallelAngleEqual);
+   	 //System.out.println( );
+   	 
+   	 
+   	 
+    end
+query "getObjectsOfAngle"
+	$result: GeoRelation(firstItem.type==GeoType.ANGLE)
+end
+rule " friend angles between parallel line"
+
+    when
+    GeoRelation(relation==Relation.PARALLEL_LINES
+    && $line1:((Line)firstItem)
+    && $line2:((Line)secondItem)
+    
+    
+    )
+    $angle1 : Angle( directionRight.name==$line1.name || directionLeft.name==$line1.name)
+    $angle2 : Angle((directionLeft.name==$line2.name
+    && directionRight.name==$angle1.directionLeft.name &&
+    eval($angle1.directionRight.name==$line1.name))||(directionRight.name==$line2.name
+    && directionLeft.name==$angle1.directionRight.name &&
+    eval($angle1.directionLeft.name==$line1.name))
+    )
+    
+    then
+   	 
+   	 GeoRelation parrallelAngleEqual = new GeoRelation($angle1,$angle2,Relation.EQUALS);
+   	 //insert(parrallelAngleEqual);
+   	 System.out.println($angle1.pointOne.name+""+$angle1.middle.name+""+$angle1.pointThree.name+"+"+
+   	 $angle2.pointOne.name+""+$angle2.middle.name+""+$angle2.pointThree.name+"=180");
+    end
+
+
+rule " opersite angles between parallel line"
+
+    when
+    GeoRelation(relation==Relation.PARALLEL_LINES
+    && $line1:((Line)firstItem)
+    && $line2:((Line)secondItem)
+    
+    
+    )
+    $angle1 : Angle( directionRight==$line1 || directionLeft==$line1)
+    $angle2 : Angle((directionLeft==$line2
+    && directionRight==$angle1.directionLeft &&
+    eval($angle1.directionRight==$line1))||(directionRight==$line2
+    && directionLeft==$angle1.directionRight &&
+    eval($angle1.directionLeft==$line1))
+    )
+    
+    then
+        
+        GeoRelation parrallelAngleEqual = new GeoRelation($angle1,$angle2,Relation.EQUALS);
+        insert(parrallelAngleEqual);
+        System.out.println($angle1.pointOne.name+""+$angle1.middle.name+""+$angle1.pointThree.name+"equal opersite angles"+
+        $angle2.pointOne.name+""+$angle2.middle.name+""+$angle2.pointThree.name);
+    end
+    
+    
+    
+     rule " angle equility"
+
+    when
+    
+    $relation1 : (GeoRelation(relation==Relation.EQUALS
+    && $item1:(firstItem)
+    && $item2:(secondItem)
+    
+    ))
+    
+    $relation2 : (GeoRelation(relation==Relation.EQUALS
+    && $item3:(firstItem)
+    && $item4:(secondItem)
+    && (this != $relation1)
+    && ($item2.name == $item3.name)
+    ))
+
+    
+    
+    
+    
+    then
+	    GeoRelation equliingRelation = new GeoRelation($item1,$item4,Relation.EQUALS);
+    	CheckingEngine.inferedKnowledge.insertGeoRelation(equliingRelation);
+    	
+         System.out.println( $item1.name +" "+ $item2.name +" "+ $item3.name +" "+ $item4.name);
+         //   	 insert(equliingRelation);
+         
+        
+    end
+    
