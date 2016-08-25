@@ -83,6 +83,11 @@ public class Angle extends GeoItem{
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
+		if( ( pointOne.getName().compareTo(pointThree.getName()) ) > 0 )
+		{
+			return String.valueOf(pointThree.getName()) + String.valueOf(middle.getName()) + String.valueOf(pointOne.getName());
+			
+		}
 		return String.valueOf(pointOne.getName()) + String.valueOf(middle.getName()) + String.valueOf(pointThree.getName());
 	}
 

@@ -26,11 +26,11 @@ public class RelationExistTest {
 		Line CE = new Line(C, E);
 		
 		Angle ABC = new Angle(BC, AB);
-		Angle test = new Angle(BC, AB);
+		Angle test = new Angle(AB, BC);
 		Angle DCE = new Angle(CD, CE);
 		
 		GeoRelation relData = new GeoRelation(ABC, DCE, Relation.EQUALS);
-		GeoRelation reltest = new GeoRelation(DCE, ABC, Relation.EQUALS);
+		GeoRelation reltest = new GeoRelation(DCE, test, Relation.EQUALS);
 		
 		GeoRelation relParrData = new GeoRelation(AB, CD, Relation.PARALLEL_LINES);
 		
