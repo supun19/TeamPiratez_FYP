@@ -149,4 +149,159 @@ rule " opersite angles between parallel line"
          
         
     end
+    rule "therem1"
+when 	
+	$G1 :GeoRelation( 
+					(firstItem.type == GeoType.LINE)
+    				&& 
+    				( secondItem.type == GeoType.POINT )
+    				&& 
+    				( relation == Relation.ON_THE_LINE ) 
+    				&&
+    				( $lineAB : ((Line)firstItem) )
+    				&& 
+    				( $pointC : ((Point)secondItem) )
+    			)
+    $lineCD :Line(
+    	eval(
+    		($lineCD.endPoints[0].name==$pointC.name)||($lineCD.endPoints[1].name==$pointC.name)
+    	)
+    )
+    
+		
+then
+	if($lineCD.endPoints[0].name==$pointC.name){
+		System.out.println($lineAB.endPoints[0].name+""+$pointC.name+$lineCD.endPoints[1].name+"+"+
+		$lineCD.endPoints[1].name+""+$pointC.name+$lineAB.endPoints[1].name+"combine angle=180");
+	}
+	else{
+		System.out.println($lineAB.endPoints[0].name+""+$pointC.name+$lineCD.endPoints[0].name+"+"+
+		$lineCD.endPoints[0].name+""+$pointC.name+$lineAB.endPoints[1].name+"combine angle=180");
+	}
+	
+end
+rule "theorem 3"
+when 
+$G1 :GeoRelation( 
+					(firstItem.type == GeoType.LINE)
+    				&& 
+    				( secondItem.type == GeoType.POINT )
+    				&& 
+    				( relation == Relation.ON_THE_LINE ) 
+    				&&
+    				( $lineAB : ((Line)firstItem) )
+    				&& 
+    				( $pointE : ((Point)secondItem) )
+    			)
+$G2 :GeoRelation( 
+					(firstItem.type == GeoType.LINE)
+    				&& 
+    				( secondItem.type == GeoType.POINT )
+    				&& 
+    				( relation == Relation.ON_THE_LINE ) 
+    				&&
+    				( $lineCD : ((Line)firstItem) )
+    				&& 
+    				( $pointF : ((Point)secondItem) )
+    			)
+$G3:GeoRelation(
+					relation == Relation.PARALLEL_LINES 
+					&&
+					((((Line)firstItem)==$lineAB))
+					&&
+	 				((((Line)secondItem)==$lineCD))
+	 		)
+$line :Line(((endPoints[0].name==$pointE.name)&&(endPoints[1].name==$pointF.name)
+			
+			)
+			||
+			((endPoints[1].name==$pointE.name)&&(endPoints[0].name==$pointF.name)
+			
+			)
+			)
+			
+then
+	System.out.println(
+	$lineAB.endPoints[0].name+""+$pointE.name+"//"+
+	$lineAB.endPoints[0].name+""+$pointF.name+"and"+
+	$lineAB.endPoints[0].name+""+$pointE.name+"//"+
+	$pointF.name+""+$lineCD.endPoints[1].name+"and"+
+	$pointE.name+""+$lineAB.endPoints[1].name+"//"+
+	$lineCD.endPoints[0].name+""+$pointF.name+"and"+
+	$pointE.name+""+$lineAB.endPoints[1].name+"//"+
+	$pointF.name+""+$lineCD.endPoints[0].name
+		);
+
+end
+rule "theorem 4"
+when 
+$G1 :GeoRelation( 
+					(firstItem.type == GeoType.LINE)
+    				&& 
+    				( secondItem.type == GeoType.POINT )
+    				&& 
+    				( relation == Relation.ON_THE_LINE ) 
+    				&&
+    				( $lineAB : ((Line)firstItem) )
+    				&& 
+    				( $pointE : ((Point)secondItem) )
+    			)
+$G2 :GeoRelation( 
+					(firstItem.type == GeoType.LINE)
+    				&& 
+    				( secondItem.type == GeoType.POINT )
+    				&& 
+    				( relation == Relation.ON_THE_LINE ) 
+    				&&
+    				( $lineCD : ((Line)firstItem) )
+    				&& 
+    				( $pointF : ((Point)secondItem) )
+    			)
+
+$line :Line(((endPoints[0].name==$pointE.name)&&(endPoints[1].name==$pointF.name)
+			
+			)
+			||
+			((endPoints[1].name==$pointE.name)&&(endPoints[0].name==$pointF.name)
+			
+			)
+			)
+$G3:GeoRelation(
+	relation==Relation.EQUALS
+	&&
+	$angle1:((Angle)firstItem)
+	&&
+	$angle2:((Angle)secondItem)
+	&&
+	eval(
+			(
+				(	
+					($angle1.directionLeft.endPoints[0].name==$pointE.name)
+					||
+					($angle1.directionLeft.endPoints[0].name==$pointF.name)
+				)
+				&&
+				(	
+					($angle1.directionLeft.endPoints[1].name==$pointE.name)
+					||
+					($angle1.directionLeft.endPoints[2].name==$pointF.name)
+				)
+			)
+			
+		)
+)
+			
+then
+	System.out.println(
+	$lineAB.endPoints[0].name+""+$pointE.name+"//"+
+	$lineAB.endPoints[0].name+""+$pointF.name+"and"+
+	$lineAB.endPoints[0].name+""+$pointE.name+"//"+
+	$pointF.name+""+$lineCD.endPoints[1].name+"and"+
+	$pointE.name+""+$lineAB.endPoints[1].name+"//"+
+	$lineCD.endPoints[0].name+""+$pointF.name+"and"+
+	$pointE.name+""+$lineAB.endPoints[1].name+"//"+
+	$pointF.name+""+$lineCD.endPoints[0].name
+		);
+
+end
     
