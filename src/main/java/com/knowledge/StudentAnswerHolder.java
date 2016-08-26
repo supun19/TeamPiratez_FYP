@@ -1,12 +1,8 @@
 package com.knowledge;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import com.sample.GeoRelation;
-import com.sun.org.apache.xerces.internal.impl.xpath.XPath.Step;
 
 public class StudentAnswerHolder {
 	

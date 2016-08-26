@@ -49,8 +49,12 @@ public class KnowledgeHolder {
 	public boolean relationExists(GeoRelation relation){
 		
 		for (Iterator<GeoRelation> iterator = knowledge.iterator(); iterator.hasNext();) {
+			
 
 			GeoRelation geoRelation = (GeoRelation) iterator.next();
+
+			//System.out.println(geoRelation.getName());
+
 			
 			//if two relation types are not matching
 			if( geoRelation.relation != relation.relation)
@@ -86,6 +90,19 @@ public class KnowledgeHolder {
 		//System.out.println("items" + item1 + item2);
 		return item1.sameItem(item2);
 
+	}
+	
+	public void printdata(){
+		
+		System.out.println("--------------items in knowledge Holder-------------");
+		for (Iterator<GeoRelation> iterator = knowledge.iterator(); iterator.hasNext();) {
+			
+
+			GeoRelation geoRelation = (GeoRelation) iterator.next();
+			
+			System.out.println(geoRelation.getName());
+
+		}		
 	}
 
 	

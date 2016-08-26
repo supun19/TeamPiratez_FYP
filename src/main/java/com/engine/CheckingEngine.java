@@ -84,7 +84,7 @@ public class CheckingEngine {
 				
 				studentAnswerKnowledgeHolder.insertGeoRelation(step);
 				
-				System.out.println("step is present in previously inferenced data");
+				System.out.println(step.getName() + " step is present in previously inferenced data");
 				System.out.println("------------------------");
 				
 				answerHolder.markCurrentAnswer(StepStatus.CORRECT);
@@ -93,15 +93,21 @@ public class CheckingEngine {
 			
 			else{
 				
-				System.out.println("step IS NOT present previously inferenced data");
+				System.out.println(step.getName() + ": step IS NOT present previously inferenced data");
 				
-				System.out.println("Starting Inference Engine...");
+				System.out.println("Starting Inference Engine using students knowledge...");
 				
 				fireInfirenceEngine(studentAnswerKnowledgeHolder);
 				
+				studentAnswerKnowledgeHolder.printdata();
+				
+				
+				
 				if(inferedKnowledge.relationExists(step)){
 
-					System.out.println("step is present after inferencing using student given data");
+					System.out.println(step.getName() + " step is present after inferencing using student given data");
+					
+					studentAnswerKnowledgeHolder.insertGeoRelation(step);
 
 					answerHolder.markCurrentAnswer(StepStatus.CORRECT);
 
@@ -111,11 +117,16 @@ public class CheckingEngine {
 				else
 				{
 					//System.out.println("*****************************************8");
+					System.out.println("Starting Inference Engine using infered data knowledge...");
+
 					fireInfirenceEngine(inferedKnowledge);
 					
 					if(inferedKnowledge.relationExists(step)){
+						
+						studentAnswerKnowledgeHolder.insertGeoRelation(step);
 
-						System.out.println("step is present after inferencing using previously iferenced data");
+
+						System.out.println(step.getName() + " step is present after inferencing using previously iferenced data");
 						System.out.println("student has missed a step");
 						System.out.println("------------------------");
 						
@@ -124,7 +135,7 @@ public class CheckingEngine {
 						
 					}
 					else{
-						System.out.println("step is wrong");
+						System.out.println(step.getName() + "step is wrong");
 						System.out.println("------------------------");
 						answerHolder.markCurrentAnswer(StepStatus.WRONG);
 
@@ -145,8 +156,8 @@ public class CheckingEngine {
 		AnswerGetter answerGetter = new AnswerGetter();
 		
 //		String filename = "E:\\eclipse\\data\\testdata1.txt"; // full correct
-		String filename = "E:\\eclipse\\data\\testdata2.txt"; // incorrect step
-//		String filename = "E:\\eclipse\\data\\testdata3.txt"; // missing step
+//		String filename = "E:\\eclipse\\data\\testdata2.txt"; // incorrect step
+		String filename = "E:\\eclipse\\data\\testdata3.txt"; // missing step
 
 //		String filename = "E:\\eclipse\\data\\testdata1.txt"; // full correct
 //		String filename = "E:\\eclipse\\data\\testdata1.txt"; // full correct
@@ -208,9 +219,44 @@ public class CheckingEngine {
 
 	private KnowledgeHolder loadInitialGeoRelationsDUMMY() {
 		
-		
-		
 		Point A = new Point('A');
+		Point B = new Point('B');
+		Point C = new Point('C');
+		Point D = new Point('D');
+		Point E = new Point('E');
+		Point F = new Point('F');
+		
+		Line AB = new Line(A, B);
+		Line CD = new Line(C, D);
+		Line EF = new Line(E, F);
+		Line AE = new Line(A, E);
+		Line EB = new Line(E, B);
+		Line CF = new Line(C, F);
+		Line FD = new Line(F, D);
+		
+		Angle AEF = new Angle(EF,AE);
+		Angle FEB = new Angle(EB,CD);
+		Angle CFE = new Angle(CF, EF);
+		Angle EFD = new Angle(EF, FD);
+		
+		
+		GeoRelation ABparrCD = new GeoRelation(AB, CD, Relation.PARALLEL_LINES);
+		GeoRelation AEparrCF = new GeoRelation(AE, CF, Relation.PARALLEL_LINES);
+//		GeoRelation ABparrCD = new GeoRelation(AB, CD, Relation.PARALLEL_LINES);
+		GeoRelation EonAB = new GeoRelation(AB, E, Relation.ON_THE_LINE);
+		GeoRelation FonCD = new GeoRelation(CD, F, Relation.ON_THE_LINE);
+		
+		ArrayList<GeoRelation> initRelations = new ArrayList<GeoRelation>();
+		
+		initRelations.add(ABparrCD);
+		initRelations.add(AEparrCF);
+
+		initRelations.add(EonAB);
+		initRelations.add(FonCD);
+		
+		inferedKnowledge = new KnowledgeHolder(initRelations);
+		
+		/*Point A = new Point('A');
 		Point B = new Point('B');
 		Point C = new Point('C');
 		Point D = new Point('D');
@@ -235,15 +281,60 @@ public class CheckingEngine {
 
 		initRelations.add(relParrData);
 		
-		inferedKnowledge = new KnowledgeHolder(initRelations);
+		inferedKnowledge = new KnowledgeHolder(initRelations);*/
 		
 		return null;
 	}
 
 
 	private void loadInitialGeoItamDataDUMMY() {
-
+		
+		//Data for theorem 1
 		Point A = new Point('A');
+		Point B = new Point('B');
+		Point C = new Point('C');
+		Point D = new Point('D');
+		Point E = new Point('E');
+		Point F = new Point('F');
+		Point G = new Point('G');
+		
+		Line AB = new Line(A, B);
+		Line CD = new Line(C, D);
+		Line EF = new Line(E, F);
+		Line AE = new Line(A, E);
+		Line EB = new Line(E, B);
+		Line CF = new Line(C, F);
+		Line FD = new Line(F, D);
+		
+		Angle AEF = new Angle(EF,AE);
+		Angle FEB = new Angle(EB,CD);
+		Angle CFE = new Angle(CF, EF);
+		Angle EFD = new Angle(EF, FD);
+		
+		ArrayList<GeoItem> initData = new ArrayList<GeoItem>();
+		
+		initData.add(A);
+		initData.add(B);
+		initData.add(C);
+		initData.add(D);
+		initData.add(E);
+		
+		initData.add(AB);
+		initData.add(CD);
+		initData.add(EF);
+		initData.add(AE);
+		initData.add(EB);
+		initData.add(CF);
+		initData.add(FD);
+		
+		initData.add(AEF);
+		initData.add(FEB);
+		initData.add(CFE);
+		initData.add(EFD);
+		
+		dataHolder = new GeoDataHolder(initData);
+
+		/*Point A = new Point('A');
 		Point B = new Point('B');
 		Point C = new Point('C');
 		Point D = new Point('D');
@@ -275,7 +366,7 @@ public class CheckingEngine {
 		initData.add(BCD);
 		initData.add(DCE);
 		
-		dataHolder = new GeoDataHolder(initData);
+		dataHolder = new GeoDataHolder(initData);*/
 		
 		
 	}

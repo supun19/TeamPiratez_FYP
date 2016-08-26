@@ -1,0 +1,81 @@
+package com.sample
+
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.GeoRelation;
+import com.engine.CheckingEngine;
+
+
+
+
+
+rule "oposite angle"
+	when 	$G1 :GeoRelation( 
+					(firstItem.type == GeoType.LINE)
+    				&& 
+    				( secondItem.type == GeoType.POINT )
+    				&& 
+    				( relation == Relation.ON_THE_LINE ) 
+    				&&
+    				( $lineAB : ((Line)firstItem) )
+    				&& 
+    				( $pointD : ((Point)secondItem) )
+    			)
+    $G2 :GeoRelation( 
+					(firstItem.type == GeoType.LINE)
+    				&& 
+    				( secondItem.type == GeoType.POINT )
+    				&& 
+    				( relation == Relation.ON_THE_LINE ) 
+    				&&
+    				( $lineCD : ((Line)firstItem) )
+    				&& 
+    				( $pointE : ((Point)secondItem) )
+    				&&
+    				eval(
+    					($lineAB.name!=$lineCD.name)
+    					&&
+    					($pointD.name==$pointE.name)
+    					
+    				)
+    			)			
+    			
+then
+	 System.out.println($lineAB.endPoints[0].name+""+$pointD.name+""+$lineCD.endPoints[0].name+"oposite angle equals"+
+	 $lineAB.endPoints[1].name+""+$pointD.name+""+$lineCD.endPoints[1].name+"\n"+
+	 $lineAB.endPoints[0].name+""+$pointD.name+""+$lineCD.endPoints[1].name+"oposite angle equals"+
+	 $lineAB.endPoints[1].name+""+$pointD.name+""+$lineCD.endPoints[0].name);
+	
+end
+
+
+    
+    
+    rule "friend angles between parallel line"
+
+    when
+    GeoRelation(relation==Relation.PARALLEL_LINES
+    && $line1:((Line)firstItem)
+    && $line2:((Line)secondItem)
+    
+    
+    )
+    $angle1 : Angle( directionRight.name==$line1.name || directionLeft.name==$line1.name)
+    $angle2 : Angle((directionLeft.name==$line2.name
+    && directionRight.name==$angle1.directionLeft.name &&
+    eval($angle1.directionRight.name==$line1.name))||(directionRight.name==$line2.name
+    && directionLeft.name==$angle1.directionRight.name &&
+    eval($angle1.directionLeft.name==$line1.name))
+    )
+    
+    then
+   	 
+   	 GeoRelation parrallelAngleEqual = new GeoRelation($angle1,$angle2,Relation.EQUALS);
+   	 //insert(parrallelAngleEqual);
+   	 System.out.println($angle1.pointOne.name+""+$angle1.middle.name+""+$angle1.pointThree.name+"+"+
+   	 $angle2.pointOne.name+""+$angle2.middle.name+""+$angle2.pointThree.name+"=180");
+    end
+    
+    
+    

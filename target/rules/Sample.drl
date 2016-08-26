@@ -54,11 +54,10 @@ rule " alternate angles between parallel line"
     then
    	 
    	 GeoRelation parrallelAngleEqual = new GeoRelation($angle1,$angle2,Relation.EQUALS);
-   	 insert(parrallelAngleEqual);
+//   	 insert(parrallelAngleEqual);
    	// System.out.println($angle1.pointOne.name+""+$angle1.middle.name+""+$angle1.pointThree.name+"equal alternate angles"+
    	 //$angle2.pointOne.name+""+$angle2.middle.name+""+$angle2.pointThree.name);
    	 CheckingEngine.inferedKnowledge.insertGeoRelation(parrallelAngleEqual);
-   	 //System.out.println( );
    	 
    	 
    	 
@@ -144,8 +143,9 @@ rule " opersite angles between parallel line"
 	    GeoRelation equliingRelation = new GeoRelation($item1,$item4,Relation.EQUALS);
     	CheckingEngine.inferedKnowledge.insertGeoRelation(equliingRelation);
     	
-         System.out.println( $item1.name +" "+ $item2.name +" "+ $item3.name +" "+ $item4.name);
-         //   	 insert(equliingRelation);
+         System.out.println("angle Eq" + $item1.name +" "+ $item2.name +" "+ $item3.name +" "+ $item4.name +  CheckingEngine.inferedKnowledge.insertGeoRelation(equliingRelation));
+         	// insert(equliingRelation);
+         	 //CheckingEngine.inferedKnowledge.insertGeoRelation(equliingRelation);
          
         
     end
