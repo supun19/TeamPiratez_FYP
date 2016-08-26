@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
@@ -7,13 +6,4 @@
 	<classpathentry kind="con" path="DROOLS/Drools"/>
 	<classpathentry kind="output" path="target"/>
 </classpath>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="DROOLS/Drools"/>
-	<classpathentry kind="output" path="target"/>
-</classpath>
->>>>>>> 703b090c4f914512a188d227752feacc967818a7
+
