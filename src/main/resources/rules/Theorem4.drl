@@ -1,0 +1,626 @@
+//created on: Aug 25, 2016
+package com.theorem
+
+//list any import classes here.
+
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.Relation;
+import com.sample.GeoType;
+import com.sample.GeoRelation;
+import com.engine.CheckingEngine;
+
+//declare any global variables here
+
+
+
+
+rule "alternative angle"
+when 
+$G1 :GeoRelation( 
+					(firstItem.type == GeoType.LINE)
+    				&& 
+    				( secondItem.type == GeoType.POINT )
+    				&& 
+    				( relation == Relation.ON_THE_LINE ) 
+    				&&
+    				( $lineAB : ((Line)firstItem) )
+    				&& 
+    				( $pointE : ((Point)secondItem) )
+    			)
+$G2 :GeoRelation( 
+					(firstItem.type == GeoType.LINE)
+    				&& 
+    				( secondItem.type == GeoType.POINT )
+    				&& 
+    				( relation == Relation.ON_THE_LINE ) 
+    				&&
+    				( $lineCD : ((Line)firstItem) )
+    				&& 
+    				( $pointF : ((Point)secondItem) )
+    				
+    				
+    			)
+$G3 :GeoRelation( 
+					(firstItem.type == GeoType.LINE)
+    				&& 
+    				( secondItem.type == GeoType.POINT )
+    				&& 
+    				( relation == Relation.ON_THE_LINE ) 
+    				&&
+    				( $lineEG : ((Line)firstItem) )
+    				&& 
+    				( ((Point)secondItem).name==$pointF.name )
+    				
+    				
+    			)
+
+$line :Line(((endPoints[0].name==$pointE.name)&&(endPoints[1].name==$pointF.name)
+			
+			)
+			||
+			((endPoints[1].name==$pointE.name)&&(endPoints[0].name==$pointF.name)
+			
+			)
+			)
+GeoRelation(
+	relation==Relation.EQUALS
+	&&
+	$angle1:((Angle)firstItem)
+	&&
+	$angle2:((Angle)secondItem)
+	&&
+	eval(
+			(
+				(	
+					(
+						(
+							($angle1.directionLeft.endPoints[0].name==$angle2.directionLeft.endPoints[0].name)
+							&&
+							($angle1.directionLeft.endPoints[1].name==$angle2.directionLeft.endPoints[1].name)
+						)
+						||
+						(
+							($angle1.directionLeft.endPoints[1].name==$angle2.directionLeft.endPoints[0].name)
+							&&
+							($angle1.directionLeft.endPoints[0].name==$angle2.directionLeft.endPoints[1].name)
+						)
+						
+					)
+					&&
+					(
+						(
+							($angle1.directionLeft.endPoints[0].name==$pointE.name)
+							||
+							($angle1.directionLeft.endPoints[0].name==$pointF.name)
+						)
+						&&
+						(
+							($angle1.directionLeft.endPoints[1].name==$pointE.name)
+							||
+							($angle1.directionLeft.endPoints[1].name==$pointF.name)
+						
+						
+						)
+					)
+					&&
+					(
+						(
+							(
+								($angle1.directionRight.endPoints[0].name==$lineAB.endPoints[0].name)
+								||
+								($angle1.directionRight.endPoints[0].name==$lineAB.endPoints[1].name)
+							)
+							&&
+							(
+								($angle1.directionRight.endPoints[1].name==$pointE.name)
+								||
+								($angle1.directionRight.endPoints[1].name==$pointE.name)
+							
+							
+							)
+							&&
+							(
+								($angle2.directionRight.endPoints[0].name==$lineCD.endPoints[0].name)
+								||
+								($angle2.directionRight.endPoints[0].name==$lineCD.endPoints[1].name)
+							)
+							&&
+							(
+								($angle2.directionRight.endPoints[1].name==$pointF.name)
+								||
+								($angle2.directionRight.endPoints[1].name==$pointF.name)
+							
+							
+							)
+						)
+						||
+						(
+							(
+								($angle2.directionRight.endPoints[0].name==$lineAB.endPoints[0].name)
+								||
+								($angle2.directionRight.endPoints[0].name==$lineAB.endPoints[1].name)
+							)
+							&&
+							(
+								($angle2.directionRight.endPoints[1].name==$pointE.name)
+								||
+								($angle2.directionRight.endPoints[1].name==$pointE.name)
+							
+							
+							)
+							&&
+							(
+								($angle1.directionRight.endPoints[0].name==$lineCD.endPoints[0].name)
+								||
+								($angle1.directionRight.endPoints[0].name==$lineCD.endPoints[1].name)
+							)
+							&&
+							(
+								($angle1.directionRight.endPoints[1].name==$pointF.name)
+								||
+								($angle1.directionRight.endPoints[1].name==$pointF.name)
+							
+							
+							)
+						)
+						
+					)
+				)
+				||
+				(	
+					(
+						(
+							($angle1.directionRight.endPoints[0].name==$angle2.directionRight.endPoints[0].name)
+							&&
+							($angle1.directionRight.endPoints[1].name==$angle2.directionRight.endPoints[1].name)
+						)
+						||
+						(
+							($angle1.directionRight.endPoints[1].name==$angle2.directionRight.endPoints[0].name)
+							&&
+							($angle1.directionRight.endPoints[0].name==$angle2.directionRight.endPoints[1].name)
+						)
+					)
+					
+					&&
+					(
+						(
+							($angle1.directionRight.endPoints[0].name==$pointE.name)
+							||
+							($angle1.directionRight.endPoints[0].name==$pointF.name)
+						)
+						&&
+						(
+							($angle1.directionRight.endPoints[1].name==$pointE.name)
+							||
+							($angle1.directionRight.endPoints[1].name==$pointF.name)
+						
+						
+						)
+					)
+					&&
+					(
+						(
+							(
+								($angle1.directionLeft.endPoints[0].name==$lineAB.endPoints[0].name)
+								||
+								($angle1.directionLeft.endPoints[0].name==$lineAB.endPoints[1].name)
+							)
+							&&
+							(
+								($angle1.directionLeft.endPoints[1].name==$pointE.name)
+								||
+								($angle1.directionLeft.endPoints[1].name==$pointE.name)
+							
+							
+							)
+							&&
+							(
+								($angle2.directionLeft.endPoints[0].name==$lineCD.endPoints[0].name)
+								||
+								($angle2.directionLeft.endPoints[0].name==$lineCD.endPoints[1].name)
+							)
+							&&
+							(
+								($angle2.directionLeft.endPoints[1].name==$pointF.name)
+								||
+								($angle2.directionLeft.endPoints[1].name==$pointF.name)
+							
+							
+							)
+						)
+						||
+						(
+							(
+								($angle2.directionLeft.endPoints[0].name==$lineAB.endPoints[0].name)
+								||
+								($angle2.directionLeft.endPoints[0].name==$lineAB.endPoints[1].name)
+							)
+							&&
+							(
+								($angle2.directionLeft.endPoints[1].name==$pointE.name)
+								||
+								($angle2.directionLeft.endPoints[1].name==$pointE.name)
+							
+							
+							)
+							&&
+							(
+								($angle1.directionLeft.endPoints[0].name==$lineCD.endPoints[0].name)
+								||
+								($angle1.directionLeft.endPoints[0].name==$lineCD.endPoints[1].name)
+							)
+							&&
+							(
+								($angle1.directionLeft.endPoints[1].name==$pointF.name)
+								||
+								($angle1.directionLeft.endPoints[1].name==$pointF.name)
+							
+							
+							)
+						)
+						
+					)
+				)
+			)
+			
+		)
+)
+||
+GeoRelation(
+	relation==Relation.EQUALS
+	&&
+	$angle1:((Angle)firstItem)
+	&&
+	$angle2:((Angle)secondItem)
+	&&
+	eval(
+			(
+				(
+					($angle1.directionRight.endPoints[0].name==$lineAB.endPoints[0].name)
+					||
+					($angle1.directionRight.endPoints[0].name==$pointE.name)
+					||
+					($angle1.directionRight.endPoints[0].name==$lineAB.endPoints[1].name)
+				)
+				&&
+				(
+					($angle1.directionRight.endPoints[1].name==$lineAB.endPoints[0].name)
+					||
+					($angle1.directionRight.endPoints[1].name==$pointE.name)
+					||
+					($angle1.directionRight.endPoints[1].name==$lineAB.endPoints[1].name)
+				)
+				&&
+				(
+					($angle2.directionRight.endPoints[0].name==$lineCD.endPoints[0].name)
+					||
+					($angle2.directionRight.endPoints[0].name==$pointF.name)
+					||
+					($angle2.directionRight.endPoints[0].name==$lineCD.endPoints[1].name)
+				)
+				&&
+				(
+					($angle2.directionRight.endPoints[1].name==$lineCD.endPoints[0].name)
+					||
+					($angle2.directionRight.endPoints[1].name==$pointF.name)
+					||
+					($angle2.directionRight.endPoints[1].name==$lineCD.endPoints[1].name)
+				)
+				&&
+				(
+					($angle2.directionLeft.endPoints[0].name==$lineEG.endPoints[0].name)
+					||
+					($angle2.directionLeft.endPoints[0].name==$lineEG.endPoints[1].name)
+					||
+					($angle2.directionLeft.endPoints[0].name==((Point)$G3.secondItem).name)
+				)
+				&&
+				(
+					($angle2.directionLeft.endPoints[1].name==$lineEG.endPoints[0].name)
+					||
+					($angle2.directionLeft.endPoints[1].name==$lineEG.endPoints[1].name)
+					||
+					($angle2.directionLeft.endPoints[1].name==((Point)$G3.secondItem).name)
+				)
+				&&
+				(
+					($angle1.directionLeft.endPoints[0].name==$lineEG.endPoints[0].name)
+					||
+					($angle1.directionLeft.endPoints[0].name==$lineEG.endPoints[1].name)
+					||
+					($angle1.directionLeft.endPoints[0].name==((Point)$G3.secondItem).name)
+				)
+				&&
+				(
+					($angle1.directionLeft.endPoints[1].name==$lineEG.endPoints[0].name)
+					||
+					($angle1.directionLeft.endPoints[1].name==$lineEG.endPoints[1].name)
+					||
+					($angle1.directionLeft.endPoints[1].name==((Point)$G3.secondItem).name)
+				)
+				
+			)
+			||
+			(
+				(
+					($angle1.directionLeft.endPoints[0].name==$lineAB.endPoints[0].name)
+					||
+					($angle1.directionLeft.endPoints[0].name==$pointE.name)
+					||
+					($angle1.directionLeft.endPoints[0].name==$lineAB.endPoints[1].name)
+				)
+				&&
+				(
+					($angle1.directionLeft.endPoints[1].name==$lineAB.endPoints[0].name)
+					||
+					($angle1.directionLeft.endPoints[1].name==$pointE.name)
+					||
+					($angle1.directionLeft.endPoints[1].name==$lineAB.endPoints[1].name)
+				)
+				&&
+				(
+					($angle2.directionLeft.endPoints[0].name==$lineCD.endPoints[0].name)
+					||
+					($angle2.directionLeft.endPoints[0].name==$pointF.name)
+					||
+					($angle2.directionLeft.endPoints[0].name==$lineCD.endPoints[1].name)
+				)
+				&&
+				(
+					($angle2.directionLeft.endPoints[1].name==$lineCD.endPoints[0].name)
+					||
+					($angle2.directionLeft.endPoints[1].name==$pointF.name)
+					||
+					($angle2.directionLeft.endPoints[1].name==$lineCD.endPoints[1].name)
+				)
+				&&
+				(
+					($angle2.directionRight.endPoints[0].name==$lineEG.endPoints[0].name)
+					||
+					($angle2.directionRight.endPoints[0].name==$lineEG.endPoints[1].name)
+					||
+					($angle2.directionRight.endPoints[0].name==((Point)$G3.secondItem).name)
+				)
+				&&
+				(
+					($angle2.directionRight.endPoints[1].name==$lineEG.endPoints[0].name)
+					||
+					($angle2.directionRight.endPoints[1].name==$lineEG.endPoints[1].name)
+					||
+					($angle2.directionRight.endPoints[1].name==((Point)$G3.secondItem).name)
+				)
+				&&
+				(
+					($angle1.directionRight.endPoints[0].name==$lineEG.endPoints[0].name)
+					||
+					($angle1.directionRight.endPoints[0].name==$lineEG.endPoints[1].name)
+					||
+					($angle1.directionRight.endPoints[0].name==((Point)$G3.secondItem).name)
+				)
+				&&
+				(
+					($angle1.directionRight.endPoints[1].name==$lineEG.endPoints[0].name)
+					||
+					($angle1.directionRight.endPoints[1].name==$lineEG.endPoints[1].name)
+					||
+					($angle1.directionRight.endPoints[1].name==((Point)$G3.secondItem).name)
+				)
+				
+			)
+			
+		)
+)
+||
+GeoRelation(
+	relation==Relation.EQUALS180
+	&&
+	$angle1:((Angle)firstItem)
+	&&
+	$angle2:((Angle)secondItem)
+	&&
+	eval(
+			(
+				(	
+					(
+						(
+							($angle1.directionLeft.endPoints[0].name==$angle2.directionRight.endPoints[0].name)
+							&&
+							($angle1.directionLeft.endPoints[1].name==$angle2.directionRight.endPoints[1].name)
+						)
+						||
+						(
+							($angle1.directionLeft.endPoints[1].name==$angle2.directionRight.endPoints[0].name)
+							&&
+							($angle1.directionLeft.endPoints[0].name==$angle2.directionRight.endPoints[1].name)
+						)
+						
+					)
+					&&
+					(
+						(
+							($angle1.directionLeft.endPoints[0].name==$pointE.name)
+							||
+							($angle1.directionLeft.endPoints[0].name==$pointF.name)
+						)
+						&&
+						(
+							($angle1.directionLeft.endPoints[1].name==$pointE.name)
+							||
+							($angle1.directionLeft.endPoints[1].name==$pointF.name)
+						
+						
+						)
+					)
+					&&
+					(
+						(
+							(
+								($angle1.directionRight.endPoints[0].name==$lineAB.endPoints[0].name)
+								||
+								($angle1.directionRight.endPoints[0].name==$lineAB.endPoints[1].name)
+							)
+							&&
+							(
+								($angle1.directionRight.endPoints[1].name==$pointE.name)
+								||
+								($angle1.directionRight.endPoints[1].name==$pointE.name)
+							
+							
+							)
+							&&
+							(
+								($angle2.directionLeft.endPoints[0].name==$lineCD.endPoints[0].name)
+								||
+								($angle2.directionLeft.endPoints[0].name==$lineCD.endPoints[1].name)
+							)
+							&&
+							(
+								($angle2.directionLeft.endPoints[1].name==$pointF.name)
+								||
+								($angle2.directionLeft.endPoints[1].name==$pointF.name)
+							
+							
+							)
+						)
+						||
+						(
+							(
+								($angle2.directionLeft.endPoints[0].name==$lineAB.endPoints[0].name)
+								||
+								($angle2.directionLeft.endPoints[0].name==$lineAB.endPoints[1].name)
+							)
+							&&
+							(
+								($angle2.directionLeft.endPoints[1].name==$pointE.name)
+								||
+								($angle2.directionLeft.endPoints[1].name==$pointE.name)
+							
+							
+							)
+							&&
+							(
+								($angle1.directionRight.endPoints[0].name==$lineCD.endPoints[0].name)
+								||
+								($angle1.directionRight.endPoints[0].name==$lineCD.endPoints[1].name)
+							)
+							&&
+							(
+								($angle1.directionRight.endPoints[1].name==$pointF.name)
+								||
+								($angle1.directionRight.endPoints[1].name==$pointF.name)
+							
+							
+							)
+						)
+						
+					)
+				)
+				||
+				(	
+					(
+						(
+							($angle1.directionRight.endPoints[0].name==$angle2.directionLeft.endPoints[0].name)
+							&&
+							($angle1.directionRight.endPoints[1].name==$angle2.directionLeft.endPoints[1].name)
+						)
+						||
+						(
+							($angle1.directionRight.endPoints[1].name==$angle2.directionLeft.endPoints[0].name)
+							&&
+							($angle1.directionRight.endPoints[0].name==$angle2.directionLeft.endPoints[1].name)
+						)
+					)
+					
+					&&
+					(
+						(
+							($angle1.directionRight.endPoints[0].name==$pointE.name)
+							||
+							($angle1.directionRight.endPoints[0].name==$pointF.name)
+						)
+						&&
+						(
+							($angle1.directionRight.endPoints[1].name==$pointE.name)
+							||
+							($angle1.directionRight.endPoints[1].name==$pointF.name)
+						
+						
+						)
+					)
+					&&
+					(
+						(
+							(
+								($angle1.directionLeft.endPoints[0].name==$lineAB.endPoints[0].name)
+								||
+								($angle1.directionLeft.endPoints[0].name==$lineAB.endPoints[1].name)
+							)
+							&&
+							(
+								($angle1.directionLeft.endPoints[1].name==$pointE.name)
+								||
+								($angle1.directionLeft.endPoints[1].name==$pointE.name)
+							
+							
+							)
+							&&
+							(
+								($angle2.directionRight.endPoints[0].name==$lineCD.endPoints[0].name)
+								||
+								($angle2.directionRight.endPoints[0].name==$lineCD.endPoints[1].name)
+							)
+							&&
+							(
+								($angle2.directionRight.endPoints[1].name==$pointF.name)
+								||
+								($angle2.directionRight.endPoints[1].name==$pointF.name)
+							
+							
+							)
+						)
+						||
+						(
+							(
+								($angle2.directionRight.endPoints[0].name==$lineAB.endPoints[0].name)
+								||
+								($angle2.directionRight.endPoints[0].name==$lineAB.endPoints[1].name)
+							)
+							&&
+							(
+								($angle2.directionRight.endPoints[1].name==$pointE.name)
+								||
+								($angle2.directionRight.endPoints[1].name==$pointE.name)
+							
+							
+							)
+							&&
+							(
+								($angle1.directionLeft.endPoints[0].name==$lineCD.endPoints[0].name)
+								||
+								($angle1.directionLeft.endPoints[0].name==$lineCD.endPoints[1].name)
+							)
+							&&
+							(
+								($angle1.directionLeft.endPoints[1].name==$pointF.name)
+								||
+								($angle1.directionLeft.endPoints[1].name==$pointF.name)
+							
+							
+							)
+						)
+						
+					)
+				)
+			)
+			
+		)
+	)		
+then
+	System.out.println( $lineAB.name+"parallel to"+$lineCD.name
+		);
+
+end
+
