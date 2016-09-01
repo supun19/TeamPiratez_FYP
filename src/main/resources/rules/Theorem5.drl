@@ -1,0 +1,165 @@
+//created on: Sep 1, 2016
+package com.theorem
+
+//list any import classes here.
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.Relation;
+import com.sample.GeoType;
+import com.sample.GeoRelation;
+import com.sample.Triangle;
+import com.engine.CheckingEngine;
+
+
+//declare any global variables here
+
+//function
+
+
+rule "Theorem5"
+
+    when
+        //conditions
+        $ABC:Triangle()
+        $CDE: Triangle((points[0].name!=$ABC.points[0].name) || (points[1].name!=$ABC.points[1].name )||(points[2].name!=$ABC.points[2].name))
+        $GR1:GeoRelation(
+        (firstItem.type == GeoType.ANGLE)
+        && 
+        ( secondItem.type == GeoType.ANGLE )
+        &&
+	relation==Relation.EQUALS
+	&&
+	$angle1:((Angle)firstItem)
+	&&
+	$angle2:((Angle)secondItem)
+	
+	&&
+	eval(
+			(
+				($angle1.sameItem($ABC.angles[0]))
+				||
+				($angle1.sameItem($ABC.angles[1]))
+				||
+				($angle1.sameItem($ABC.angles[2]))
+			)
+			&&
+			(
+				($angle2.sameItem($CDE.angles[0]))
+				||
+				($angle2.sameItem($CDE.angles[1]))
+				||
+				($angle2.sameItem($CDE.angles[2]))
+			)
+		)
+		
+	)
+	$GR2:GeoRelation(
+	(firstItem.type == GeoType.LINE)
+        && 
+        ( secondItem.type == GeoType.LINE )
+        &&
+	relation==Relation.EQUALS
+	&&
+	$lineAB:((Line)firstItem)
+	&&
+	$lineCD:((Line)secondItem)
+	&&
+	eval(
+			(
+				(
+					($lineAB.sameItem($angle1.directionLeft))
+					||
+					($lineAB.sameItem($angle1.directionRight))
+				)
+				&&
+				(
+					($lineCD.sameItem($angle2.directionLeft))
+					||
+					($lineCD.sameItem($angle2.directionRight))
+				)
+			)
+			||
+			(
+				(
+					($lineAB.sameItem($angle2.directionLeft))
+					||
+					($lineAB.sameItem($angle2.directionRight))
+				)
+				&&
+				(
+					($lineCD.sameItem($angle1.directionLeft))
+					||
+					($lineCD.sameItem($angle1.directionRight))
+				)
+			)
+			
+		)
+	)
+	
+	
+	$GR3:GeoRelation(
+	(firstItem.type == GeoType.LINE)
+        && 
+        ( secondItem.type == GeoType.LINE )
+        &&
+	relation==Relation.EQUALS
+	&&
+	$linePQ:((Line)firstItem)
+	&&
+	$lineRS:((Line)secondItem)
+	&&
+	eval(
+			!(	
+				(
+					($linePQ.sameItem($lineAB))
+					||
+					($linePQ.sameItem($lineCD))
+				)
+				&&
+				(
+					($lineRS.sameItem($lineAB))
+					||
+					($lineRS.sameItem($lineCD))
+				)
+			)
+		)
+	&&
+	eval(
+			(
+				(
+					($linePQ.sameItem($angle1.directionLeft))
+					||
+					($linePQ.sameItem($angle1.directionRight))
+				)
+				&&
+				(
+					($lineRS.sameItem($angle2.directionLeft))
+					||
+					($lineRS.sameItem($angle2.directionRight))
+				)
+			)
+			||
+			(
+				(
+					($linePQ.sameItem($angle2.directionLeft))
+					||
+					($linePQ.sameItem($angle2.directionRight))
+				)
+				&&
+				(
+					($lineRS.sameItem($angle1.directionLeft))
+					||
+					($lineRS.sameItem($angle1.directionRight))
+				)
+			)
+		)
+	)
+	
+	
+    then
+        System.out.println($ABC.points[0].name+""+$ABC.points[1].name+$ABC.points[2].name+"congruence according to pa ko pa"+$CDE.points[0].name+""+$CDE.points[1].name+$CDE.points[2].name);
+
+end
+
+
