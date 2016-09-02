@@ -1,0 +1,225 @@
+//created on: Sep 1, 2016
+package com.theorem
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+
+
+rule "thorem6"
+
+    when
+        //conditions
+        $ABC:Triangle()
+        $CDE: Triangle((points[0].name!=$ABC.points[0].name) || (points[1].name!=$ABC.points[1].name )||(points[2].name!=$ABC.points[2].name))
+        $GR1:GeoRelation(
+        (firstItem.type == GeoType.ANGLE)
+        && 
+        ( secondItem.type == GeoType.ANGLE )
+        &&
+	relation==Relation.EQUALS
+	&&
+	$angle1:((Angle)firstItem)
+	&&
+	$angle2:((Angle)secondItem)
+	
+	&&
+	eval(
+			(
+				($angle1.sameItem($ABC.angles[0]))
+				||
+				($angle1.sameItem($ABC.angles[1]))
+				||
+				($angle1.sameItem($ABC.angles[2]))
+			)
+			&&
+			(
+				($angle2.sameItem($CDE.angles[0]))
+				||
+				($angle2.sameItem($CDE.angles[1]))
+				||
+				($angle2.sameItem($CDE.angles[2]))
+			)
+		)
+	)
+	$GR2:GeoRelation(
+        (firstItem.type == GeoType.ANGLE)
+        && 
+        ( secondItem.type == GeoType.ANGLE )
+        &&
+	relation==Relation.EQUALS
+	&&
+	$angle3:((Angle)firstItem)
+	
+	&&
+	$angle4:((Angle)secondItem)
+	
+	)
+	&& 
+	eval(
+		!(
+					(
+						($angle3.sameItem($angle1))
+						||
+						($angle3.sameItem($angle2))
+					)
+					||
+					(
+						($angle4.sameItem($angle1))
+						||
+						($angle4.sameItem($angle2))
+					)
+				)
+	)
+	&&
+	
+	eval(
+			(
+				(
+					(
+						($angle3.sameItem($ABC.angles[0]))
+						||
+						($angle3.sameItem($ABC.angles[1]))
+						||
+						($angle3.sameItem($ABC.angles[2]))
+					)
+					&&
+					(
+						($angle4.sameItem($CDE.angles[0]))
+						||
+						($angle4.sameItem($CDE.angles[1]))
+						||
+						($angle4.sameItem($CDE.angles[2]))
+					)
+				)
+				||
+				(
+					(
+						($angle4.sameItem($ABC.angles[0]))
+						||
+						($angle4.sameItem($ABC.angles[1]))
+						||
+						($angle4.sameItem($ABC.angles[2]))
+					)
+					&&
+					(
+						($angle3.sameItem($CDE.angles[0]))
+						||
+						($angle3.sameItem($CDE.angles[1]))
+						||
+						($angle3.sameItem($CDE.angles[2]))
+					)
+				)
+			)
+			
+		)
+	$GR3:GeoRelation(
+	(firstItem.type == GeoType.LINE)
+        && 
+        ( secondItem.type == GeoType.LINE )
+        &&
+	relation==Relation.EQUALS
+	&&
+	$lineAB:((Line)firstItem)
+	&&
+	$lineCD:((Line)secondItem)
+	
+	)
+	&&
+	eval(
+			(
+				($lineAB.sameItem($angle1.directionLeft))
+				&&
+				($lineCD.sameItem($angle2.directionLeft))
+				&&
+				(
+					($angle1.directionRight.sameItem($angle3.directionLeft))
+					||
+					($angle1.directionRight.sameItem($angle4.directionLeft))
+				)
+			)
+			||
+			(
+				($lineAB.sameItem($angle2.directionLeft))
+				&&
+				($lineCD.sameItem($angle1.directionLeft))
+				&&
+				(
+					($angle1.directionRight.sameItem($angle3.directionLeft))
+					||
+					($angle1.directionRight.sameItem($angle4.directionLeft))
+				)
+			)
+			||
+			(
+				($lineAB.sameItem($angle1.directionRight))
+				&&
+				($lineCD.sameItem($angle2.directionRight))
+				&&
+				(
+					($angle1.directionLeft.sameItem($angle3.directionRight))
+					||
+					($angle1.directionLeft.sameItem($angle4.directionRight))
+				)
+			)
+			||
+			(
+				($lineAB.sameItem($angle2.directionRight))
+				&&
+				($lineCD.sameItem($angle1.directionRight))
+				&&
+				(
+					($angle1.directionLeft.sameItem($angle3.directionRight))
+					||
+					($angle1.directionLeft.sameItem($angle4.directionRight))
+				)
+			)
+			||
+			(
+				($lineAB.sameItem($angle1.directionLeft))
+				&&
+				($lineCD.sameItem($angle2.directionRight))
+				&&
+				(
+					($angle1.directionRight.sameItem($angle3.directionLeft))
+					||
+					($angle1.directionRight.sameItem($angle4.directionLeft))
+				)
+				&&
+				(
+					($angle2.directionLeft.sameItem($angle3.directionRight))
+					||
+					($angle2.directionLeft.sameItem($angle4.directionRight))
+				)
+			)
+			||
+			(
+				($lineAB.sameItem($angle1.directionRight))
+				&&
+				($lineCD.sameItem($angle2.directionLeft))
+				&&
+				(
+					($angle2.directionRight.sameItem($angle3.directionLeft))
+					||
+					($angle2.directionRight.sameItem($angle4.directionLeft))
+				)
+				&&
+				(
+					($angle1.directionLeft.sameItem($angle3.directionRight))
+					||
+					($angle1.directionLeft.sameItem($angle4.directionRight))
+				)
+			)
+			
+		)
+    then
+        //actions
+	System.out.println($ABC.points[0].name+""+$ABC.points[1].name+$ABC.points[2].name+"congruence according ko ko pa "+$CDE.points[0].name+""+$CDE.points[1].name+$CDE.points[2].name);
+	
+	
+end
+

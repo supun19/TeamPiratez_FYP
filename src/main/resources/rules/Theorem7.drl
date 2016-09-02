@@ -1,0 +1,205 @@
+//created on: Sep 1, 2016
+package com.theorem
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+
+
+rule "theorem7"
+
+    when
+        //conditions
+     //getting triangle
+    $ABC:Triangle()
+    //get another triangle
+    $DEF: Triangle()
+    //equals line relation from two angle
+    $GR1:GeoRelation(
+	(firstItem.type == GeoType.LINE)
+    && 
+    ( secondItem.type == GeoType.LINE )
+    &&
+	relation==Relation.EQUALS
+	&&
+	$lineAB:((Line)firstItem)
+	&&
+	$lineDE:((Line)secondItem)
+	
+	)
+	 //equals line relation from two angle
+    $GR2:GeoRelation(
+	(firstItem.type == GeoType.LINE)
+    && 
+    ( secondItem.type == GeoType.LINE )
+    &&
+	relation==Relation.EQUALS
+	&&
+	$lineBC:((Line)firstItem)
+	&&
+	$lineEF:((Line)secondItem)
+	
+	)
+	 //equals line relation from two angle
+    $GR3:GeoRelation(
+	(firstItem.type == GeoType.LINE)
+    && 
+    ( secondItem.type == GeoType.LINE )
+    &&
+	relation==Relation.EQUALS
+	&&
+	$lineAC:((Line)firstItem)
+	&&
+	$lineDF:((Line)secondItem)
+	
+	)
+	//get two different triangle
+	eval(
+		!(
+			($ABC.points[0].sameItem($DEF.points[0]))
+			&&
+			($ABC.points[1].sameItem($DEF.points[1]))
+			&&
+			($ABC.points[2].sameItem($DEF.points[2]))
+		)
+	)
+	//checking different line equal relation
+	eval(
+			!(	
+				($lineAB.sameItem($lineBC))
+				||
+				($lineAB.sameItem($lineAC))
+				||
+				($lineBC.sameItem($lineAC))
+			)
+	)
+	//checking line AB containg ABC and DE is contain DEF triangle 
+	eval(
+			(
+				(
+					($lineAB.sameItem($ABC.lines[0]))
+					||
+					($lineAB.sameItem($ABC.lines[1]))
+					||
+					($lineAB.sameItem($ABC.lines[2]))
+				)
+				&&
+				(
+					($lineDE.sameItem($DEF.lines[0]))
+					||
+					($lineDE.sameItem($DEF.lines[1]))
+					||
+					($lineDE.sameItem($DEF.lines[2]))
+				)
+			)
+			||
+			(
+					($lineAB.sameItem($DEF.lines[0]))
+					||
+					($lineAB.sameItem($DEF.lines[1]))
+					||
+					($lineAB.sameItem($DEF.lines[2]))
+				)
+				&&
+				(
+					($lineDE.sameItem($ABC.lines[0]))
+					||
+					($lineDE.sameItem($ABC.lines[1]))
+					||
+					($lineDE.sameItem($ABC.lines[2]))
+				)
+			
+	)
+	//checking line BC containg ABC and EF is contain DEF triangle 
+	eval(
+			(
+				(
+					($lineBC.sameItem($ABC.lines[0]))
+					||
+					($lineBC.sameItem($ABC.lines[1]))
+					||
+					($lineBC.sameItem($ABC.lines[2]))
+				)
+				&&
+				(
+					($lineEF.sameItem($DEF.lines[0]))
+					||
+					($lineEF.sameItem($DEF.lines[1]))
+					||
+					($lineEF.sameItem($DEF.lines[2]))
+				)
+			)
+			||
+			(
+					($lineBC.sameItem($DEF.lines[0]))
+					||
+					($lineBC.sameItem($DEF.lines[1]))
+					||
+					($lineBC.sameItem($DEF.lines[2]))
+				)
+				&&
+				(
+					($lineEF.sameItem($ABC.lines[0]))
+					||
+					($lineEF.sameItem($ABC.lines[1]))
+					||
+					($lineEF.sameItem($ABC.lines[2]))
+				)
+			
+	)
+	//checking line AC containg ABC and DF is contain DEF triangle 
+	eval(
+			(
+				(
+					($lineAC.sameItem($ABC.lines[0]))
+					||
+					($lineAC.sameItem($ABC.lines[1]))
+					||
+					($lineAC.sameItem($ABC.lines[2]))
+				)
+				&&
+				(
+					($lineDF.sameItem($DEF.lines[0]))
+					||
+					($lineDF.sameItem($DEF.lines[1]))
+					||
+					($lineDF.sameItem($DEF.lines[2]))
+				)
+			)
+			||
+			(
+					($lineAC.sameItem($DEF.lines[0]))
+					||
+					($lineAC.sameItem($DEF.lines[1]))
+					||
+					($lineAC.sameItem($DEF.lines[2]))
+				)
+				&&
+				(
+					($lineDF.sameItem($ABC.lines[0]))
+					||
+					($lineDF.sameItem($ABC.lines[1]))
+					||
+					($lineDF.sameItem($ABC.lines[2]))
+				)
+			
+	)
+    then
+        //actions
+       	System.out.println($ABC.points[0].name+""+$ABC.points[1].name+$ABC.points[2].name+"congruence according pa pa pa "+$DEF.points[0].name+""+$DEF.points[1].name+$DEF.points[2].name);
+	
+
+end
+
+rule "Your Second Rule"
+    //include attributes such as "salience" here...
+    when
+        //conditions
+    then
+        //actions
+
+end
