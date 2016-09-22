@@ -1,5 +1,5 @@
 package com.sample;
 
 public enum Reason {
-	ALTERNATIVE_ANGLE
+	දත්තය ,ඒකාන්තර_කෝණ,ALTERNATE_ANGLES
 }
