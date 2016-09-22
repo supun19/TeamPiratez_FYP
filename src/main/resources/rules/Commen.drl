@@ -41,6 +41,7 @@ then
 end
 
 */
+/*
 rule "theorem 3"
 when 
 $G1 :GeoRelation( 

@@ -14,7 +14,7 @@ import com.engine.CheckingEngine;
 //declare any global variables here
 
 
-
+/*
 
 rule "alternative angle"
 when 
@@ -623,4 +623,4 @@ then
 		);
 
 end
-
+*/

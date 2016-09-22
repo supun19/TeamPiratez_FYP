@@ -6,7 +6,7 @@ import com.sample.Line;
 import com.sample.GeoRelation;
 import com.engine.CheckingEngine;
 
-
+/*
 
 rule " test"
 
@@ -149,4 +149,4 @@ rule " opersite angles between parallel line"
          
         
     end
-    
+    */
