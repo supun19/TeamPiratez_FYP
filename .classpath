@@ -6,3 +6,4 @@
 	<classpathentry kind="con" path="DROOLS/Drools"/>
 	<classpathentry kind="output" path="target"/>
 </classpath>
+

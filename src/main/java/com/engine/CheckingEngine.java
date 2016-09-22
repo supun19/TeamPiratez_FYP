@@ -18,6 +18,7 @@ import com.sample.GeoItem;
 import com.sample.GeoRelation;
 import com.sample.Line;
 import com.sample.Point;
+import com.sample.Reason;
 import com.sample.Relation;
 
 public class CheckingEngine {
@@ -48,14 +49,14 @@ public class CheckingEngine {
 	 * algorithm
 	 * 
 	 * while there are elements in students answer
-	 * 		if:element is present in infered knowledge
+	 * 		if:element is present in inferred knowledge
 	 * 			add element to studentAnswerKnowledgeHolder
 	 * 			mark step as correct
 	 * 		else
 	 * 			run inference engine with loading  studentAnswerKnowledgeHolder
-	 * 			add new knowledge to infered knowledge
+	 * 			add new knowledge to inferred knowledge
 	 * 
-	 * 			if:element is present in infered knowledge
+	 * 			if:element is present in inferred knowledge
 	 * 				student has missed a step
 	 * 				current step is correct
 	 * 			else
@@ -155,9 +156,9 @@ public class CheckingEngine {
 		
 		AnswerGetter answerGetter = new AnswerGetter();
 		
-//		String filename = "E:\\eclipse\\data\\testdata1.txt"; // full correct
+		String filename = "C:\\Users\\Lahiru\\Downloads\\Final Year Project\\Implementation\\Answers\\test.txt"; // full correct
 //		String filename = "E:\\eclipse\\data\\testdata2.txt"; // incorrect step
-		String filename = "E:\\eclipse\\data\\testdata3.txt"; // missing step
+//		String filename = "E:\\eclipse\\data\\testdata3.txt"; // missing step
 
 //		String filename = "E:\\eclipse\\data\\testdata1.txt"; // full correct
 //		String filename = "E:\\eclipse\\data\\testdata1.txt"; // full correct
@@ -219,7 +220,7 @@ public class CheckingEngine {
 
 	private KnowledgeHolder loadInitialGeoRelationsDUMMY() {
 		
-		Point A = new Point('A');
+		/*Point A = new Point('A');
 		Point B = new Point('B');
 		Point C = new Point('C');
 		Point D = new Point('D');
@@ -254,9 +255,9 @@ public class CheckingEngine {
 		initRelations.add(EonAB);
 		initRelations.add(FonCD);
 		
-		inferedKnowledge = new KnowledgeHolder(initRelations);
+		inferedKnowledge = new KnowledgeHolder(initRelations);*/
 		
-		/*Point A = new Point('A');
+		Point A = new Point('A');
 		Point B = new Point('B');
 		Point C = new Point('C');
 		Point D = new Point('D');
@@ -271,9 +272,9 @@ public class CheckingEngine {
 		Angle DCE = new Angle(CD, CE);
 		Angle BCD = new Angle(BC, CD);
 		
-		GeoRelation relData = new GeoRelation(BCD, DCE, Relation.EQUALS);
+		GeoRelation relData = new GeoRelation(BCD, DCE, Relation.EQUALS,Reason.දත්තය);
 		
-		GeoRelation relParrData = new GeoRelation(AB, CD, Relation.PARALLEL_LINES);
+		GeoRelation relParrData = new GeoRelation(AB, CD, Relation.PARALLEL_LINES,Reason.දත්තය);
 		
 		ArrayList<GeoRelation> initRelations = new ArrayList<GeoRelation>();
 		
@@ -281,7 +282,7 @@ public class CheckingEngine {
 
 		initRelations.add(relParrData);
 		
-		inferedKnowledge = new KnowledgeHolder(initRelations);*/
+		inferedKnowledge = new KnowledgeHolder(initRelations);
 		
 		return null;
 	}
@@ -290,7 +291,7 @@ public class CheckingEngine {
 	private void loadInitialGeoItamDataDUMMY() {
 		
 		//Data for theorem 1
-		Point A = new Point('A');
+		/*Point A = new Point('A');
 		Point B = new Point('B');
 		Point C = new Point('C');
 		Point D = new Point('D');
@@ -332,9 +333,9 @@ public class CheckingEngine {
 		initData.add(CFE);
 		initData.add(EFD);
 		
-		dataHolder = new GeoDataHolder(initData);
+		dataHolder = new GeoDataHolder(initData);*/
 
-		/*Point A = new Point('A');
+		Point A = new Point('A');
 		Point B = new Point('B');
 		Point C = new Point('C');
 		Point D = new Point('D');
@@ -366,7 +367,7 @@ public class CheckingEngine {
 		initData.add(BCD);
 		initData.add(DCE);
 		
-		dataHolder = new GeoDataHolder(initData);*/
+		dataHolder = new GeoDataHolder(initData);
 		
 		
 	}
