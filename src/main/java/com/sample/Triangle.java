@@ -22,7 +22,7 @@ public class Triangle extends GeoItem {
         
         angles[0] = new Angle(lines[0], lines[1]);
         angles[1] = new Angle(lines[1], lines[2]);
-        angles[2] = new Angle(lines[2], lines[1]);
+        angles[2] = new Angle(lines[2], lines[0]);
         
     }
 
