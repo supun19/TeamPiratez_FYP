@@ -8,6 +8,6 @@ public class TestReason {
 	public static void main(String args[]){
 		CheckingReason checkingReason=new CheckingReason();
 		
-		System.out.println(checkingReason.isReasonValid("ඒකාන්තර කෝණ", Reason.ALTERNATIVE_ANGLE));
+		System.out.println(checkingReason.isReasonValid("ඒකාන්තර කෝණ", Reason.ALTERNATE_ANGLES));
 	}
 }

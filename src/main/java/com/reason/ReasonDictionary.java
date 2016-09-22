@@ -36,6 +36,6 @@ public class ReasonDictionary {
 	      tokenz.add("ඒකාන්තර");
 	      tokenz.add("ඒකාන්තර කෝණ");
 	      tokenz.add("ඒ");
-	      addTokenListToDictionary(Reason.ALTERNATIVE_ANGLE, tokenz);
+	      addTokenListToDictionary(Reason.ALTERNATE_ANGLES, tokenz);
 	}
 }
