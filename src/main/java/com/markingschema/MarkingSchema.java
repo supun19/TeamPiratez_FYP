@@ -50,7 +50,7 @@ public class MarkingSchema {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//System.out.println(answerScript.getQuestion().get(0).getSubQuestion().get(0).getMarkSet().getStepGroup().getStep().get(0).getReason());
+		System.out.println(answerScript.getQuestion().get(0).getSubQuestion().get(0).getMarkSet().getStepGroup().getStep().get(0).getReason());
 		return answerScript;
 	}
 	
