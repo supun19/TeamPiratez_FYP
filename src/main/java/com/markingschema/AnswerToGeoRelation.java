@@ -13,13 +13,20 @@ import com.sample.Point;
 import com.sample.Relation;
 
 public class AnswerToGeoRelation {
+	private AnswerToGeoRelation answerToGeoRelation;
 	public static void main(String arg[]){
 		AnswerToGeoRelation answerToGeoRelation=new AnswerToGeoRelation();
 		
-		GeoRelation a=answerToGeoRelation.getRelation("{line}AB//{line}CD");
+		GeoRelation a=answerToGeoRelation.getRelation("{line}AB//{line}CD","දත්තය");
 		System.out.println(a.firstItem.getName()+""+a.secondItem.getName());
 	}
-	public GeoRelation getRelation(String step){
+	
+	public AnswerToGeoRelation() {
+		super();
+		this.answerToGeoRelation=new AnswerToGeoRelation();
+	}
+
+	public GeoRelation getRelation(String step,String studentReason){
 
 		String reason = "";
         try {
@@ -57,7 +64,8 @@ public class AnswerToGeoRelation {
 			item2=choiceGeoItem(right);
 			relation = new GeoRelation(item1, item2, Relation.PARALLEL_LINES);
 		}
-
+		relation.setStudentReason(studentReason);
+		
 		return relation;
 		
 	}

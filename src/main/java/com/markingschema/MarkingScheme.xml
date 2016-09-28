@@ -5,9 +5,7 @@
 	<question id="q01" totalMarks="4">
 	<subQuestion id="01" totalMarks="1" isProof="true">
 		<markSet id="1">
-			<stepGroup order="true">
-				<stepGroup order="false">
-					<stepGroup order="true">
+			
 						<step>
 								<expression mark="1"><answer>{line}AB//{line}CD</answer></expression>
 								
@@ -20,13 +18,13 @@
 								<reason mark="1"><answer>ඒකාන්තාර කෝන සමාන වේ</answer></reason>
 								
 						</step>
-					</stepGroup>
+					
 					<step>
 							<expression mark="1"><answer>{angle}BCD={angle}DCE</answer></expression>
 							<reason mark="1"><answer>දත්තය</answer></reason>
 							
 					</step>
-				</stepGroup>
+				
 				<step>
 						<expression mark="1"><answer>{angle}ABC={angle}DCE</answer></expression>
 						
@@ -35,7 +33,7 @@
 
 					</step>
 					
-			</stepGroup>
+			
 		</markSet>
 	</subQuestion>
 	</question>

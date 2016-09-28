@@ -1,5 +1,7 @@
 package com.markingschema;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -7,7 +9,8 @@ import com.sun.org.apache.xerces.internal.impl.xs.SubstitutionGroupHandler;
 
 public class MarkSet {
 	int id;
-	StepGroup stepGroup; 
+	 
+	private List<Step> step;
 	@XmlAttribute 
 	public int getId() {
 		return id;
@@ -16,13 +19,15 @@ public class MarkSet {
 	public void setId(int id) {
 		this.id = id;
 	}
-	@XmlElement
-	public StepGroup getStepGroup() {
-		return stepGroup;
+	@XmlElement  
+	public List<Step> getStep() {
+		return step;
 	}
 
-	public void setStepGroup(StepGroup stepGroup) {
-		this.stepGroup = stepGroup;
+	public void setStep(List<Step> step) {
+		this.step = step;
 	}
+	
+	
 	
 }
