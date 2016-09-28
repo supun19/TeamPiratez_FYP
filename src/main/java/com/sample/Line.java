@@ -13,7 +13,7 @@ public class Line extends GeoItem {
 		endPoints = new Point[2];			
 		endPoints[0] = point0;
 		endPoints[1] = point1;
-		name = getName();
+		name = this.getName();
 		
 	}
 

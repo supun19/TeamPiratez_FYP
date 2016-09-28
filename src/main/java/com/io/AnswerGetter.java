@@ -43,8 +43,9 @@ public class AnswerGetter {
 		return relations;
 
 	}
+	
 
-	private GeoRelation splitScript(String step) {
+	public GeoRelation splitScript(String step) {
 		
 		
 		String reason = "";

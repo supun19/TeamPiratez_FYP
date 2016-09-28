@@ -16,7 +16,10 @@ public class MarkingSchema {
 		MarkingSchema markingSchema = new MarkingSchema();
 		String path="src/main/java/com/markingschema/MarkingScheme.xml";
 		Document doc=markingSchema.readXml(path);
-		markingSchema.MarkingSchemaXmlMaper(path);
+		AnswerScript answerscript= markingSchema.MarkingSchemaXmlMaper(path);
+		//AnswerPattern answerPattern=new AnswerPattern();
+		//List<AnswerPattern> patterns=answerPattern.getPosibleAnswerPattern(answerscript);
+		
 	}
 
 	public Document readXml(String path) {
