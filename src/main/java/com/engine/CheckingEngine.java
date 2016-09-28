@@ -272,9 +272,9 @@ public class CheckingEngine {
 		Angle DCE = new Angle(CD, CE);
 		Angle BCD = new Angle(BC, CD);
 		
-		GeoRelation relData = new GeoRelation(BCD, DCE, Relation.EQUALS,Reason.දත්තය);
+		GeoRelation relData = new GeoRelation(BCD, DCE, Relation.EQUALS,Reason.DATHTHAYA);
 		
-		GeoRelation relParrData = new GeoRelation(AB, CD, Relation.PARALLEL_LINES,Reason.දත්තය);
+		GeoRelation relParrData = new GeoRelation(AB, CD, Relation.PARALLEL_LINES,Reason.DATHTHAYA);
 		
 		ArrayList<GeoRelation> initRelations = new ArrayList<GeoRelation>();
 		
