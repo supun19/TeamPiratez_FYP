@@ -1,6 +1,8 @@
 package com.markingschema;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,20 +15,27 @@ import com.sample.Point;
 import com.sample.Relation;
 
 public class AnswerToGeoRelation {
-	private AnswerToGeoRelation answerToGeoRelation;
+	//private AnswerToGeoRelation answerToGeoRelation;
 	public static void main(String arg[]){
 		AnswerToGeoRelation answerToGeoRelation=new AnswerToGeoRelation();
 		
-		GeoRelation a=answerToGeoRelation.getRelation("{line}AB//{line}CD","දත්තය");
+		GeoRelation a=answerToGeoRelation.getRelation("{line}AB//{line}CD");
 		System.out.println(a.firstItem.getName()+""+a.secondItem.getName());
 	}
 	
-	public AnswerToGeoRelation() {
-		super();
-		this.answerToGeoRelation=new AnswerToGeoRelation();
+	public List<GeoRelation> getRelationStep(AnswerScript answerscrip){
+		List<GeoRelation> steps=new ArrayList<GeoRelation>();
+		List<Step> schemasteps= answerscrip.getQuestion().get(0).getSubQuestion().get(0).getMarkSet().getStep();
+		for (Step step :schemasteps ) {
+			
+				steps.add(getRelation(step.getExpression().answer));
+			
+			
+		}
+		return steps;
+		
 	}
-
-	public GeoRelation getRelation(String step,String studentReason){
+	public GeoRelation getRelation(String step){
 
 		String reason = "";
         try {
@@ -64,7 +73,7 @@ public class AnswerToGeoRelation {
 			item2=choiceGeoItem(right);
 			relation = new GeoRelation(item1, item2, Relation.PARALLEL_LINES);
 		}
-		relation.setStudentReason(studentReason);
+		//relation.setStudentReason(studentReason);
 		
 		return relation;
 		

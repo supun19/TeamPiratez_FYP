@@ -95,7 +95,7 @@ public class AnswerGetter {
 			item2 = choichGeoItem(part2);
 			relation = new GeoRelation(item1, item2, Relation.PARALLEL_LINES);
 		}
-
+		relation.setStudentReason(reason);
 		return relation;
 	}
 

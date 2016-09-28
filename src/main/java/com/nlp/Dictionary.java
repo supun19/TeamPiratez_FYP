@@ -30,7 +30,9 @@ public class Dictionary {
 	}
 	public HashMap<String,String> getSimilarTokens(String key){
 		HashMap<String,String> SimilarTokens=new HashMap<String,String>();
+		//System.out.println(key+"key");
 		for (String token : dictionary.get(key)) {
+			//System.out.println(token+"token");
 			SimilarTokens.put(token, key);
 		}
 		

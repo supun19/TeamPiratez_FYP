@@ -36,14 +36,14 @@ public class MarkingSchema {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (Step step : answerScript.getQuestion().get(0).getSubQuestion().get(0).getMarkSet().getStep()) {
+		/*for (Step step : answerScript.getQuestion().get(0).getSubQuestion().get(0).getMarkSet().getStep()) {
 			if(step.getReason()!=null){
 				System.out.println(step.getReason().answer);
 			}
 			
-		}
-		System.out.println(answerScript.getQuestion().get(0).getSubQuestion().get(0).getMarkSet().getStep().get(0).getReason().answer);
-		return answerScript;
+		}*/
+		/*System.out.println(answerScript.getQuestion().get(0).getSubQuestion().get(0).getMarkSet().getStep().get(0).getReason().answer);
+		*/return answerScript;
 	}
 	
 }
