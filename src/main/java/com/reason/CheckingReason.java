@@ -9,6 +9,7 @@ public class CheckingReason {
 	ReasonDictionary dictionary;
 	public CheckingReason(){
 		dictionary=new ReasonDictionary();
+		isReasonValid("", Reason.ALTERNATE_ANGLES);
 	}
 	public boolean isReasonValid(String studentReason,Reason generateReason){
 		boolean reason=false;
