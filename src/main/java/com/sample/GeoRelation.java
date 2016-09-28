@@ -7,6 +7,7 @@ public class GeoRelation {
 	public GeoItem secondItem;
 	public Relation relation;
 	public ArrayList<Reason> reasons;
+	public String studentReason;
 	
 	public GeoRelation(GeoItem first, GeoItem second, Relation relation){
 		this.firstItem = first;
@@ -38,4 +39,13 @@ public class GeoRelation {
 	public void setReason(Reason reason){
 		this.reasons.add(reason);
 	}
+
+	public String getStudentReason() {
+		return studentReason;
+	}
+
+	public void setStudentReason(String studentReason) {
+		this.studentReason = studentReason;
+	}
+	
 }
