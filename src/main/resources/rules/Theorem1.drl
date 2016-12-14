@@ -1,0 +1,54 @@
+//created on: Dec 8, 2016
+package com.triangle
+
+//list any import classes here.
+
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.Relation;
+import com.sample.GeoType;
+import com.sample.GeoRelation;
+import com.sample.ExpressionRelation;
+import com.sample.RelationType
+//declare any global variables here
+
+
+
+
+rule "Theorem1"
+
+    when
+        //conditions
+        //get two line
+        $BD : Line()
+       	
+        AConB : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.POINT, this.relation==Relation.ON_THE_LINE )
+    	//two angle from created twoline
+    	$ABD : Angle()
+       	$CBD : Angle()
+    	//get two different line
+    	
+        eval($BD.isAPoint(((Point)AConB.secondItem)))
+        //different angle
+        eval($ABD.sameItem($CBD))
+    then
+        //actions
+        ExpressionRelation relation1=new ExpressionRelation(RelationType.EXPRESSION_RELATION);
+        
+	   	Angle val=new Angle(180);
+	   	relation1.addItem($ABD);
+	    relation1.addOperation(Relation.PLUS);
+	    relation1.addItem($CBD);
+	    relation1.addOperation(Relation.EQUALS);
+	    relation1.addItem(val);
+	    //insert(relation1);
+	    System.out.println("Theorem1");
+
+end
+
+query "getObjectsOfClassA"
+    $result: ExpressionRelation(relationType == RelationType.EXPRESSION_RELATION)
+end
+
+

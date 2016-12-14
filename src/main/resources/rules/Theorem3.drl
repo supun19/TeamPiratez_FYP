@@ -1,0 +1,133 @@
+//created on: Aug 25, 2016
+package com.theorem
+
+//list any import classes here.
+
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.Relation;
+import com.sample.GeoType;
+import com.sample.GeoRelation;
+
+import com.sample.ExpressionRelation;
+import com.sample.RelationType
+//declare any global variables here
+
+
+//Theorem 3.2 
+rule " alternate angles between parallel lines are equal"
+    when
+    	//There should be two parallel lines
+    	GeoRelation(relation==Relation.PARALLEL_LINES,
+    				$line1:((Line)firstItem),
+    				$line2:((Line)secondItem))
+    				
+    	$angle1 : Angle( directionRight.name==$line1.name || directionLeft.name==$line1.name)
+    	$angle2 : Angle( directionRight.name==$line2.name || directionLeft.name==$line2.name)
+    	
+    	//Alternate angles are created only when both angles left or right sides are same
+    	eval(($angle1.directionLeft.name == $angle2.directionLeft.name) ||
+    			($angle1.directionRight.name == $angle2.directionRight.name))
+    
+    then
+   	 
+   	 GeoRelation parrallelAngleEqual = new GeoRelation($angle1,$angle2,Relation.EQUALS);
+//   	 insert(parrallelAngleEqual);
+   	 //System.out.println($angle1.getName()+" equal alternate angle "+ $angle2.getName()+"Teorem3");
+   	 //CheckingEngine.transitionKnowledgeHolder.insertGeoRelation(parrallelAngleEqual);
+   	   	 
+end
+rule " opersite angles between parallel line"
+
+    when
+    	//two line cross one point
+    	$ABonE : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.POINT, this.relation==Relation.ON_THE_LINE )
+    	$FGonE : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.POINT, this.relation==Relation.ON_THE_LINE )
+    	
+    	//line 
+    	$AEG : Angle()
+    	$BEF : Angle()
+    	//common point
+    	eval(((Point)$ABonE.secondItem).sameItem((Point)$FGonE.secondItem));
+   		//two different angle
+   		eval(! $AEG.sameItem($BEF) )
+   		eval( ($AEG.middle.sameItem(((Point)$ABonE.secondItem)) && $BEF.middle.sameItem(((Point)$ABonE.secondItem)))
+   			&&
+   			(  $AEG.pointOne.sameItem(((Line)$ABonE.firstItem).endPoints[0]) && $BEF.pointOne.sameItem(((Line)$ABonE.firstItem).endPoints[1])
+   				&& $AEG.pointThree.sameItem(((Line)$FGonE.firstItem).endPoints[0]) && $BEF.pointThree.sameItem(((Line)$FGonE.firstItem).endPoints[1])   			
+   				)
+   			||
+   			( 
+   				 $AEG.pointOne.sameItem(((Line)$ABonE.firstItem).endPoints[0]) && $BEF.pointOne.sameItem(((Line)$ABonE.firstItem).endPoints[1])
+   				&& $AEG.pointThree.sameItem(((Line)$FGonE.firstItem).endPoints[1]) && $BEF.pointThree.sameItem(((Line)$FGonE.firstItem).endPoints[0])   			
+   			)
+   			
+   			)
+   
+    
+    then
+       
+        //System.out.println($AEG +" = " +$BEF);
+    end
+
+rule " friend angles between parallel line"
+
+    when
+    //two paralleline
+     $ABparaCD : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.LINE, this.relation==Relation.PARALLEL_LINES )
+    	//line
+     $BD : Line()
+   	 //two angle
+   	 $ABD : Angle()
+   	 $BDC : Angle()
+   	 //line contain two angle
+   	 eval($ABD.isALine($BD))
+   	 eval($BDC.isALine($BD))
+   	 
+   	 eval(
+   	 		$ABD.directionLeft.sameItem(((Line)$ABparaCD.firstItem)) && $ABD.directionRight.sameItem($BD) && 
+   	 		$BDC.directionRight.sameItem(((Line)$ABparaCD.secondItem)) && $BDC.directionLeft.sameItem($BD) 
+   	 		
+   	 	)
+   	 
+    
+    then
+    	 ExpressionRelation expresion=new ExpressionRelation(RelationType.EXPRESSION_RELATION);
+    	 
+    	 Angle val=new Angle(180);
+    	 expresion.addAllItems($ABD,$BDC,val);
+    	 expresion.addAllOperations(Relation.PLUS,Relation.EQUALS);
+		 //insert(expresion); 
+		 System.out.println($ABD+""+$BDC+" =180");
+        System.out.println(expresion);
+end
+/*
+rule " cosecutive angles between parallel line"
+
+    when
+    //two paralleline
+     ABparaCD : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.LINE, this.relation==Relation.PARALLEL_LINES )
+    	//line
+     $BD : Line()
+     $DE : Line()
+   	 //two angle
+   	 $ABD : Angle()
+   	 $BDC : Angle()
+   	 //two differetn line
+   	 
+   	 eval($BD.sameItem($DE))
+   	 eval( 
+   	 	($ABD.directionLeft.sameItem($BD) && $ABD.directionLeft.sameItem($DE) && $ABD.directionRight.sameItem(((Line)ABparaCD.firstItem)) && $ABD.directionRight.sameItem(((Line)ABparaCD.secondItem)))
+   	 
+   	 )
+   	 
+    
+    then
+    	 GeoRelation online5 = new GeoRelation($ABD, $BDC, Relation.EQUALS);
+    	 insert(online5);
+		 System.out.println($ABD+" = "+$BDC+" consecutive");
+        
+end*/
+ 
+

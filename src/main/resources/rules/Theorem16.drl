@@ -1,0 +1,61 @@
+//created on: Dec 7, 2016
+package com.parallelgrame
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+
+
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.Relation;
+import com.sample.GeoType;
+import com.sample.Triangle;
+import com.sample.GeoRelation;
+import com.sample.Quadrangle;
+import com.engine.CheckingEngine;
+
+
+
+
+rule "Theorem16"
+
+    when
+        //conditions
+         $ABCD : Quadrangle()
+        $ABlineDC : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.LINE, this.relation==Relation.EQUALS )
+        $ADlineBC : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.LINE, this.relation==Relation.EQUALS )
+   		
+   		// Line are contain quadrangle
+   		//line AB
+   		eval($ABCD.isAPoint(((Line)$ABlineDC.firstItem).endPoints[0]) && $ABCD.isAPoint(((Line)$ABlineDC.firstItem).endPoints[1]))
+    //line CD
+   		eval($ABCD.isAPoint(((Line)$ABlineDC.secondItem).endPoints[0]) && $ABCD.isAPoint(((Line)$ABlineDC.secondItem).endPoints[1]))
+    
+    //line AD
+   		eval($ABCD.isAPoint(((Line)$ADlineBC.firstItem).endPoints[0]) && $ABCD.isAPoint(((Line)$ADlineBC.firstItem).endPoints[1]))
+    //line BC
+   		eval($ABCD.isAPoint(((Line)$ADlineBC.secondItem).endPoints[0]) && $ABCD.isAPoint(((Line)$ADlineBC.secondItem).endPoints[1]))
+    
+    //Line must not same
+    //AB CD two line
+    	eval(!((Line)$ABlineDC.firstItem).sameItem((Line)$ABlineDC.secondItem))
+    //AD BC two line
+    	eval(!((Line)$ADlineBC.firstItem).sameItem((Line)$ADlineBC.secondItem))
+    //ABlineDC and ADlineBC relation should be different
+    	eval(!((Line)$ABlineDC.firstItem).sameItem((Line)$ADlineBC.firstItem))
+    then
+        //actions
+         //actions
+        $ABCD.isAParalleologram=true;
+       // insert($ABCD);
+	System.out.println("Theorem16");
+
+end
+
+

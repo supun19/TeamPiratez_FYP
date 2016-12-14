@@ -1,0 +1,41 @@
+//created on: Dec 6, 2016
+package com.parallelgrame
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+
+
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.Relation;
+import com.sample.GeoType;
+import com.sample.Triangle;
+import com.sample.GeoRelation;
+import com.sample.Quadrangle;
+import com.engine.CheckingEngine;
+
+rule "Your First Rule"
+
+    when
+    	$ABCD : Quadrangle()
+    	$ABXY : Quadrangle()
+    	
+    	//deferent quadrangle
+    	eval(!$ABCD.sameItem($ABXY))
+    	//find common base line
+    	eval($ABCD.isALine($ABXY.lines[0])||$ABCD.isALine($ABXY.lines[1])||$ABCD.isALine($ABXY.lines[2])||$ABCD.isALine($ABXY.lines[3]))
+        //conditions
+    then
+        //actions
+        //insert(new GeoRelation($ABCD,$ABXY,Relation.EQUALS));
+        System.out.println("ABCD area equal ABXY");
+        System.out.println("Theorem22");
+
+end
+

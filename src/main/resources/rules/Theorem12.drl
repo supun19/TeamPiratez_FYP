@@ -1,0 +1,53 @@
+//created on: Dec 7, 2016
+package com.triangle
+
+//list any import classes here.
+
+//declare any global variables here
+
+
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.Relation;
+import com.sample.GeoType;
+import com.sample.Triangle;
+import com.sample.GeoRelation;
+import com.sample.Quadrangle;
+import com.sample.Triangle;
+import com.engine.CheckingEngine;
+
+
+
+
+//declare any global variables here
+
+
+
+
+rule "Theorem12"
+
+    when
+        //conditions
+        //triangle
+         $ABC : Triangle()
+         //two line equal
+         $AB_AC : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.LINE, this.relation==Relation.EQUALS )
+    	//two line are different
+    	eval(!((Line)$AB_AC.firstItem).sameItem((Line)$AB_AC.secondItem))
+    	//two line contain triangle
+    	eval($ABC.isALine((Line)$AB_AC.firstItem) && $ABC.isALine((Line)$AB_AC.secondItem) )
+    then
+    System.out.println("Theorem12");
+        //actions
+
+end
+
+rule "Your Second Rule"
+    //include attributes such as "salience" here...
+    when
+        //conditions
+    then
+        //actions
+
+end

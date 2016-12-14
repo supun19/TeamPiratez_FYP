@@ -1,0 +1,29 @@
+//created on: Dec 8, 2016
+package com.triangle
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+
+import com.sample.RelationType
+rule "Theorem10"
+
+    when
+        //conditions
+          $ABC : Triangle()
+          
+    then
+        //actions
+        ExpressionRelation expresion=new ExpressionRelation(RelationType.EXPRESSION_RELATION);
+        Angle BCD=new Angle(180);
+        
+        expresion.addAllItems($ABC.angles[0],$ABC.angles[2],$ABC.angles[2],BCD);
+        expresion.addAllOperations(Relation.PLUS,Relation.PLUS,Relation.EQUALS);
+		insert(expresion);   
+		System.out.println("Theorem10");     	
+
+end

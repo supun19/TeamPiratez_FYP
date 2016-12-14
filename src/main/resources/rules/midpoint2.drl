@@ -1,0 +1,82 @@
+//created on: Dec 6, 2016
+package com.midpoint
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+
+
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.Relation;
+import com.sample.GeoType;
+import com.sample.Triangle;
+import com.sample.GeoRelation;
+import com.engine.CheckingEngine;
+rule "Your First Rule"
+
+    when
+        //conditions
+         //getting triangle
+    $ABC : Triangle()
+     // mid point on AB line
+    $ABonD : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.POINT, this.relation==Relation.ON_THE_LINE )
+    //mid point on BC line
+    $BConE : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.POINT, this.relation==Relation.ON_THE_LINE )
+     // D is mid point in AB
+    $ADDB  : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.LINE, this.relation==Relation.EQUALS )
+    	 // parallel line through D that alsoparallelto AC then BC line is divide 2 part which is equal
+    $AC_para_DE : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.LINE, this.relation==Relation.PARALLEL_LINES )
+    
+     //ADDB relation have two line that have a common point
+       eval((((Line)$ADDB.firstItem).isAPoint(((Line)$ADDB.secondItem).endPoints[0]) )||(((Line)$ADDB.firstItem).isAPoint(((Line)$ADDB.secondItem).endPoints[1]) ))
+       //check two equal line along one line
+       eval(((Line)$ADDB.firstItem).isAPoint((Point)$ABonD.secondItem) && ((Line)$ADDB.secondItem).isAPoint((Point)$ABonD.secondItem))
+       // now we fint line that contain mid point now we have to find thal line is line in triangle
+        eval($ABC.isAPoint(((Line)$ABonD.firstItem).endPoints[0]) && $ABC.isAPoint(((Line)$ABonD.firstItem).endPoints[1]))
+        // now we fint line that contain mid point now we have to find thal line is line in triangle
+        eval($ABC.isAPoint(((Line)$BConE.firstItem).endPoints[0]) && $ABC.isAPoint(((Line)$BConE.firstItem).endPoints[1]))
+       //parallelline through mid point of line of triangle
+       eval((((Line)$AC_para_DE.firstItem).isAPoint((Point)$ABonD.secondItem)&&((Line)$AC_para_DE.firstItem).isAPoint((Point)$BConE.secondItem))||(((Line)$AC_para_DE.secondItem).isAPoint((Point)$ABonD.secondItem)&&((Line)$AC_para_DE.secondItem).isAPoint((Point)$BConE.secondItem)))
+    	
+    	eval(($ABC.isAPoint(((Line)$AC_para_DE.firstItem).endPoints[0]) && $ABC.isAPoint(((Line)$AC_para_DE.firstItem).endPoints[1]))||($ABC.isAPoint(((Line)$AC_para_DE.secondItem).endPoints[0]) && $ABC.isAPoint(((Line)$AC_para_DE.secondItem).endPoints[1])))
+        
+    then
+    	
+        if(((Line)$ADDB.firstItem).isAPoint((Point)$ABonD.secondItem)){
+        	Line BE= new Line(((Line)$BConE.firstItem).endPoints[0],(Point)$BConE.secondItem);
+        	Line CE= new Line(((Line)$BConE.firstItem).endPoints[1],(Point)$BConE.secondItem);
+        	//insert(new GeoRelation(BE,CE,Relation.EQUALS));
+        }
+        else{
+        	Line BE= new Line(((Line)$ABonD.firstItem).endPoints[0],(Point)$ABonD.secondItem);
+        	Line CE= new Line(((Line)$ABonD.firstItem).endPoints[1],(Point)$ABonD.secondItem);
+        	//insert(new GeoRelation(BE,CE,Relation.EQUALS));
+        }
+		System.out.println("success");
+		
+end
+
+rule "check mid point 2"
+    //include attributes such as "salience" here...
+    when
+    $ABonD : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.POINT, this.relation==Relation.ON_THE_LINE )
+     //mid point on BC line
+    $BConE : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.POINT, this.relation==Relation.ON_THE_LINE )
+       // D is mid point in AB
+    $ADDB  : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.LINE, this.relation==Relation.EQUALS )
+    	// E is mid point in BC
+    $BEEC  : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.LINE, this.relation==Relation.EQUALS )
+    
+        //conditions
+    then
+        //actions
+        System.out.println("success");
+        System.out.println("Theorem21");
+
+end

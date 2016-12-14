@@ -1,0 +1,43 @@
+//created on: Dec 6, 2016
+package com.parallegrame
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.Relation;
+import com.sample.GeoType;
+import com.sample.Triangle;
+import com.sample.GeoRelation;
+import com.sample.Quadrangle;
+import com.engine.CheckingEngine;
+
+
+
+rule "Your First Rule"
+
+    when
+    	$ABCD : Quadrangle()
+    	$AXB : Triangle()
+    	// mid point on AB line
+    	$CDonX : GeoRelation( this.firstItem.type == GeoType.LINE, this.secondItem.type == GeoType.POINT, this.relation==Relation.ON_THE_LINE )
+    	//have a common base line for quadrangle and triangle
+    	eval($ABCD.isALine($AXB.lines[0])||$ABCD.isALine($AXB.lines[1])||$ABCD.isALine($AXB.lines[2]))
+        //conditions
+        //find alternative line for base line
+        eval($ABCD.isALine((Line)$CDonX.firstItem)) 
+        eval(!$AXB.isAPoint(((Line)$CDonX.firstItem).endPoints[0])&& !$AXB.isAPoint(((Line)$CDonX.firstItem).endPoints[1]))
+        
+    then
+        //actions
+        //insert(new GeoRelation($ABCD,$AXB,Relation.EQUALS));
+        System.out.println("ABCD=2AXB");
+        System.out.println("Theorem23");
+
+end
+

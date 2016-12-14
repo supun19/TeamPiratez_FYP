@@ -1,0 +1,46 @@
+//created on: Dec 7, 2016
+package com.parallelgram
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+//declare any global variables here
+
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.Relation;
+import com.sample.GeoType;
+import com.sample.Triangle;
+import com.sample.GeoRelation;
+import com.sample.Quadrangle;
+import com.engine.CheckingEngine;
+
+
+
+rule "Your First Rule"
+
+    when
+    	$ABCD : Quadrangle()
+    	$ABC : Triangle()
+    	$ABD : Triangle()
+    	
+    	//first triangle point is 3 of parallelgrame 
+    	eval($ABCD.isAPoint($ABC.points[0]) && $ABCD.isAPoint($ABC.points[1]) && $ABCD.isAPoint($ABC.points[2]))
+        //second triangle point is 3 of parallelgrame 
+    	eval($ABCD.isAPoint($ABD.points[0]) && $ABCD.isAPoint($ABD.points[1]) && $ABCD.isAPoint($ABD.points[2]))
+        
+        
+        //conditions
+    then
+        //actions
+        //insert(new GeoRelation($ABC,$ABD,Relation.EQUALS))
+        System.out.println("ABC=ABD");
+        System.out.println("Theorem24");
+
+end
+

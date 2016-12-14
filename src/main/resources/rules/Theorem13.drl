@@ -1,0 +1,60 @@
+//created on: Dec 7, 2016
+package com.parallelgrame
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+import com.sample.Angle;
+import com.sample.Point;
+import com.sample.Line;
+import com.sample.Relation;
+import com.sample.GeoType;
+import com.sample.Triangle;
+import com.sample.GeoRelation;
+import com.sample.Quadrangle;
+import com.sample.Triangle;
+import com.engine.CheckingEngine;
+
+
+
+
+rule "Theorem13"
+
+    when
+        //conditions
+        //Traingle
+        $ABC : Triangle();
+        //find two angle equals
+        $ABCequalBAC : GeoRelation(this.firstItem.type == GeoType.ANGLE, this.secondItem.type == GeoType.ANGLE, this.relation==Relation.EQUALS);
+    	//check angle are different item
+    	eval(!((Angle)$ABCequalBAC.firstItem).sameItem(((Angle)$ABCequalBAC.secondItem)))
+    	//angle contain triangle
+    	//ABC
+    	eval($ABC.isAPoint(((Angle)$ABCequalBAC.firstItem).pointOne) && $ABC.isAPoint(((Angle)$ABCequalBAC.firstItem).middle) && $ABC.isAPoint(((Angle)$ABCequalBAC.firstItem).pointThree))
+    	//BAC
+    	eval($ABC.isAPoint(((Angle)$ABCequalBAC.secondItem).pointOne) && $ABC.isAPoint(((Angle)$ABCequalBAC.secondItem).middle) && $ABC.isAPoint(((Angle)$ABCequalBAC.secondItem).pointThree))
+    then
+        //actions
+        System.out.println("Theorem13");
+        Line AC;
+        Line BC;
+        if(((Angle)$ABCequalBAC.firstItem).directionLeft.sameItem(((Angle)$ABCequalBAC.secondItem).directionLeft)){
+        	AC=((Angle)$ABCequalBAC.firstItem).directionRight;
+        	BC=((Angle)$ABCequalBAC.secondItem).directionRight;
+        }
+        else if(((Angle)$ABCequalBAC.firstItem).directionLeft.sameItem(((Angle)$ABCequalBAC.secondItem).directionRight)){
+        	AC=((Angle)$ABCequalBAC.firstItem).directionRight;
+        	BC=((Angle)$ABCequalBAC.secondItem).directionLeft;
+        }
+        else{
+        	AC=((Angle)$ABCequalBAC.firstItem).directionLeft;
+        	BC=((Angle)$ABCequalBAC.secondItem).directionLeft;	
+        }
+        //insert(new GeoRelation(AC,BC,Relation.EQUALS))
+
+end
+
